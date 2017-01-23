@@ -1,6 +1,7 @@
 ---
 title: "Purpose of this blog"
 author: "Tham, Wei Yang"
+excerpt: "Outlining how I plan to use the blog"
 date: "2017-01-17"
 output: html_document
 ---
@@ -11,7 +12,7 @@ I've experimented with blogging before, but after a while I wanted to find a way
 
 Of course, I reserve the right to adjust the scope of this blog in the future, but as of now I want to stick to the following topics:
 
-- Science and science policy, U.S. and International
+- Economics of science and science policy, U.S. and International
 - Econometrics and statistics
 - Reproducibility and replicability
 - Data visualization
