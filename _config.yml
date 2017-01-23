@@ -7,13 +7,13 @@
 
 # Site Settings
 locale                   : "en"
-title                    : "My title"
+title                    : "Wei Yang Tham"
 title_separator          : "-"
 name                     : "Wei Yang Tham"
-description              : "An amazing website."
-url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+description              : "My professional website and blog."
+url                      : "https://weiyangtham.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "weiyangtham/weiyangtham.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -79,9 +79,9 @@ analytics:
 author:
   name             : "Wei Yang Tham"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an amazing person."
-  location         : "Somewhere"
-  email            :
+  bio              : "PhD student in Economics at The Ohio State University"
+  location         : "Columbus, Ohio"
+  email            : "weiyang.tham@gmail.com"
   uri              :
   bitbucket        :
   codepen          :
@@ -100,7 +100,7 @@ author:
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
   steam            :
   tumblr           :
-  twitter          :
+  twitter          : "wytham88"
   vine             :
   weibo            :
   xing             :
@@ -145,10 +145,11 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 
 # Conversion
-markdown: kramdown
+markdown: Pandoc # kramdown
 highlighter: rouge
 lsi: false
-excerpt_separator: "\n\n"
+# excerpt_separator: "\n\n"
+excerpt_separator: ""   # Workaround for http://blog.slaks.net/2013-08-09/jekyll-tag-was-never-closed/
 incremental: false
 
 
@@ -176,6 +177,14 @@ paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
+# Pandoc options
+pandoc:
+  extensions:
+    - normalize
+    - smart
+    - mathjax
+    # - csl: _styles/apa.csl
+    # - bibliography: bibliography/references.bib
 
 # Plugins
 gems:
@@ -184,6 +193,7 @@ gems:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  - jekyll-pandoc
 
 # mimic GitHub Pages with --safe
 whitelist:
