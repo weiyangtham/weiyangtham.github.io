@@ -12,7 +12,7 @@ output: html_document
 
 There's an interesting feature of how the NIH funds grants that amplifies "booms and busts" in the system. NPR wrote about this in a 2014 [article](http://www.npr.org/sections/health-shots/2014/09/24/351142702/after-the-nih-funding-euphoria-comes-the-hangover) as part of a [series](http://www.npr.org/series/347129694/science-squeezed) on funding issues in biomedical research. I thought it'd be nice to illustrate the point with a couple of simple graphs. 
 
-The basic idea is this: grants are made on a four-year cycle, with one quarter of the promised funds given out each year. If you get a \$1m grant, you get \$250,000 each year rather than \$1m upfront. This means that if the NIH spends the same amount every year, $\frac{3}{4}$ of its budget goes to grants that are starting years 2, 3, or 4 of their cycles and the remaining $\frac{1}{4}$ goes to new grants (i.e. starting year 1 of their cycles). 
+The basic idea is this: grants are made on a four-year cycle, with one quarter of the promised funds given out each year. If you get a \$1m grant, you get \$250,000 each year rather than \$1m upfront. This means that if the NIH spends the same amount every year, $$\frac{3}{4}$$ of its budget goes to grants that are starting years 2, 3, or 4 of their cycles and the remaining $$\frac{1}{4}$$ goes to new grants (i.e. starting year 1 of their cycles). 
 
 Now, imagine that Congress decides to increase the NIH's budget one year. The NIH's obligations to previous grants hasn't changed, and it can't save the money for later, so this leaves it extra money for funding new grants. However, because it is only funding the first year of these new grants, this leaves the NIH with *higher future obligations*.
 
