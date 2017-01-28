@@ -1,7 +1,7 @@
 ---
 title: "Rendering markdown for a Github Pages website"
 author: "Tham, Wei Yang"
-date: "January 28, 2017"
+date: "2017-01-28"
 output: html_document
 tags:
   - code
