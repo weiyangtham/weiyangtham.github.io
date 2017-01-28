@@ -3,7 +3,8 @@ title: "Booms and Busts in NIH Funding"
 excerpt: "How the NIH budgeting process amplifies funding changes"
 author: "Tham, Wei Yang"
 date: "2017-01-21"
-tags: [science policy]
+tags:
+  - science policy
 output: html_document
 ---
 
