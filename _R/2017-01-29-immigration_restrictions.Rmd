@@ -1,5 +1,5 @@
 ---
-title: "What economics says about the effect of immigration restrictions on science"
+title: "What econ research says about the effect of immigration restrictions on science"
 author: "Tham, Wei Yang"
 date: "2017-01-29"
 output: html_document
