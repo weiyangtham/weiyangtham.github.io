@@ -91,6 +91,7 @@ To make the same point in a slightly different way, I plotted the percentage cha
 
 <img src="/figs/2017-02-05-extract_nci_pdf/unnamed-chunk-7-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
+## Code for extracting and cleaning PDF data
 
 {% highlight r %}
 library(tidyverse)
@@ -98,7 +99,6 @@ library(magrittr)
 library(stringr)
 library(tabulizer)
 
-# Extract tables
 datadir = str_c(here(), "/data")
 
 # Download PDFs

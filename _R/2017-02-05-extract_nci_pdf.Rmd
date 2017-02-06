@@ -166,13 +166,13 @@ nci_df %>%
 
 ```
 
+## Code for extracting and cleaning PDF data
 ```{r, eval = FALSE}
 library(tidyverse)
 library(magrittr)
 library(stringr)
 library(tabulizer)
 
-# Extract tables
 datadir = str_c(here(), "/data")
 
 # Download PDFs
