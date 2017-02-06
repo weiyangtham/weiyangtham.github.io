@@ -1,0 +1,161 @@
+---
+title: "Extract NCI funding numbers with tabulizer"
+author: "Tham, Wei Yang"
+date: "2017-02-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', fig.width = 9)
+```
+
+```{r, echo = FALSE, warning = FALSE}
+library(tidyverse)
+library(magrittr)
+library(stringr)
+library(here)
+library(ggthemes)
+
+theme_set(theme_fivethirtyeight(base_size = 18) +
+              theme(axis.title = element_text()))
+
+```
+
+One of the problems with the [NIH Funding Facts](https://report.nih.gov/fundingfacts/fundingfacts.aspx), which I've used [before](https://weiyangtham.github.io/nih_booms_busts/), is that it has missing data in some important places. First, it only goes back to 1998 and you might want to look at trends even before that. Second, it has missing data in some unpredictable places. For instance, you can see below that National Cancer Institute (NCI) research grant funding is missing from 1998 to 2005, which is a pretty glaring omission given that it's one of the biggest NIH institutes by funding. 
+
+```{r, echo = FALSE, warning = FALSE}
+fundfacts = read_tsv(str_c(here(), '/data/nih_fundingfacts.tsv'), col_types = cols(Statistic = 'd')) 
+
+fundfacts %<>% 
+  select(-Source) %>% 
+  rename(ic = IC, fiscalyear = `Fiscal Year`, topic = Topic, mechanism = Mechanism, 
+         activity = Activity, type = Type, statistic = Statistic) %>% 
+  filter(activity == "R01", mechanism == "Research Grants - RPGs", str_detect(ic, "NCI|NHLBI"))
+
+# Change topic labels so easier to type
+fundfacts %<>% 
+  spread(topic, statistic) %>% 
+  rename(totalfunding = `Awards - Funding (Total Cost)`, meanfunding = `Awards - Average Total Cost`, 
+         n_awards = `Awards - Number`, success_rate = `Success Rate`, 
+         n_applications = `Applications - Number`) %>% 
+  select(ic, fiscalyear, type, totalfunding)
+
+fundfacts %>% 
+  filter(type == "All Types (in aggregate)") %>% 
+  ggplot(aes(fiscalyear, totalfunding, color = ic)) + 
+  geom_point() + geom_line()
+
+```
+
+One place you might try to get this data is the [NIH Office of Budget](https://officeofbudget.od.nih.gov/spending_hist.html). It doesn't break down spending by activity codes (so you can't, say, look only at spending on R01 grants), but it goes back all the way to 1983 so you can get a longer time series of NIH spending. The problem? The data is in a PDF (oh god why?!), so we have to find a way to extract it. For the sake of reproducibility and accuracy, I want to avoid copying and posting numbers directly from the document as much as possible. 
+
+The `tabulizer` package turns out to work pretty well for this since the data is in a table.[^1] We still have to do some "manual" work because of the table's structure. Using the `tabulizer::extract_areas` function, you can interactively specify the area of the PDF where you have a table to be extracted. 
+
+![][ncipdf]
+
+[ncipdf]: https://weiyangtham.github.io/images/ncipdf.png
+
+[^1]: Another option for PDF extraction in R is `pdftools`.
+
+```{r, eval = FALSE, message=FALSE}
+# Code to extract tables
+datadir = str_c(here(), "/data")
+
+# Download PDFs
+download.file("https://officeofbudget.od.nih.gov/pdfs/spending_history/Mechanism%20Detail%20by%20IC,%20FY%201983%20-%20FY%201999.pdf", destfile = str_c(datadir, "/ic_funds_83_99.pdf"))
+download.file("https://officeofbudget.od.nih.gov/pdfs/FY17/Mechanism%20Detail%20by%20IC%20FY%202000-FY%202015%20V.pdf", destfile = str_c(datadir, "/ic_funds_00_15.pdf"))
+
+library(tabulizer)
+
+# Enter interactive mode to select desired tables, which are returned as a list
+nci_83_99 = extract_areas(str_c(datadir, "/ic_funds_83_99.pdf"), pages = 1:2, 
+                          method = 'data.frame')
+nci_00_15 = extract_areas(str_c(datadir, "/ic_funds_00_15.pdf"), pages = 1:2, 
+                          method = 'data.frame')
+
+nci_83_15 = c(nci_83_99, nci_00_15)
+write_rds(nci_83_15, "data/nci_83_15.rds")
+```
+
+I'm extracting the data from two files, and unfortunately there's a slight formatting difference in each PDF file, so the extracted tables will come out slightly differently. You can see below what you're supposed to get from each PDF file. 
+
+```{r, echo = FALSE}
+
+datadir = str_c(here(), "/data")
+nci_83_15 = read_rds(str_c(datadir, "/nci_00_15.rds"))
+
+nci_83_15[[1]]
+```
+
+```{r, echo = FALSE, message = FALSE}
+# Clean extracted data
+mechanisms = c("noncompeting", "admin supplements", "competing", "total", "sbir-sttr", "total_with_sbir_sttr")
+
+cols_83_92 = str_c(c('nawards', 'totalfunding'), sort(rep(1983:1992, 2)), sep = '_')
+cols_93_99 = str_c(c('nawards', 'totalfunding'), sort(rep(1993:1999, 2)), sep = '_')
+cols_00_07 = str_c(c('nawards', 'totalfunding'), sort(rep(2000:2007, 2)), sep = '_')
+cols_08_15 = str_c(c('nawards', 'totalfunding'), sort(rep(2008:2015, 2)), sep = '_')
+
+namelist = list(cols_83_92, cols_93_99, cols_00_07, cols_08_15)
+
+# rename variables and standardize the "mechanism" column
+nci_83_15_renamed = map(1:4, function(i){
+  nci_83_15[[i]] = setNames(nci_83_15[[i]], c("mechanism", namelist[[i]]))
+  nci_83_15[[i]][, 1] = mechanisms
+  nci_83_15[[i]]
+  })
+
+# Combine the four tables and reshape
+x = nci_83_15_renamed[[1]]
+for (i in 2:4){
+  x = inner_join(x, nci_83_15_renamed[[i]])
+}
+
+x = tbl_df(x)
+
+nci_df = x %>% 
+  gather(stat_year, num, -mechanism) %>% 
+  mutate(num = parse_number(num)) %>% 
+  separate(stat_year, c('stat', 'fiscalyear'), sep = '_', convert = TRUE) %>% 
+  spread(stat, num) %>% 
+  mutate(totalfunding = totalfunding * 1000)
+
+```
+
+After some data cleaning, we're done![^2] Let's do some plots to make sure things look alright. 
+
+[^2]: This cleaning process lead me to discover `readr::parse_number`. Super helpful!
+
+```{r, echo = FALSE}
+nci_df %>% filter(mechanism == "total") %>% 
+  ggplot(aes(fiscalyear, totalfunding/1e9)) + 
+  geom_line(size = 1.5, colour = "blue") +
+  geom_vline(xintercept = 1998, linetype = 2) + 
+  geom_text(data = data_frame(fiscalyear = 1992.5, totalfunding = 1.8, text = "Doubling Begins"), 
+            aes(fiscalyear, y = totalfunding, label = text), size = 8) + 
+  labs(title = "Total NCI Funding for Research Projects", y = "$Bn", x = "Fiscal Year")
+
+```
+
+From a quick inspection the time series looks alright. We can see the rapid rise in funding due to the [doubling of the NIH budget from 1998 to 2003](http://www.sciencemag.org/news/2002/01/nih-budget-reaches-doubling-point), and followed by the flatness in funding since then. But even before the doubling, funding had already been on an upward trajectory from 1983, except between 1993 to 1995. From a historical perspective, the funding stagnation in funding since 2003 is an unusual event. 
+
+To make the same point in a slightly different way, I plotted the percentage change in funding from the previous year. There is only one year with a decrease in nominal funding pre-2003, compared to six years after 2003. 
+
+```{r, echo = FALSE}
+nci_df %>% 
+  filter(mechanism == "total") %>% 
+  arrange(fiscalyear) %>% 
+  mutate(change = totalfunding/lag(totalfunding) - 1, change = change * 100) %>% 
+  filter(!is.na(change)) %>% 
+  ggplot(aes(fiscalyear, change)) +
+  geom_point(size = 2) +
+  # geom_line(size = 1, linetype = 3) + 
+  geom_hline(yintercept = 0, linetype = 2, size = 2, colour = "red") + 
+  geom_vline(xintercept = 2003, linetype = 2) + 
+  labs(title = "NCI Funding Change from Previous Year", y = "Percent", x = "Fiscal Year") +
+  geom_text(data = data_frame(fiscalyear = 2009.5, change = 11, text = "Post Doubling"), 
+            aes(fiscalyear, y = change, label = text), size = 8) 
+  
+
+```
+
