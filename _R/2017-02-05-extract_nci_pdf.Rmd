@@ -125,9 +125,13 @@ nci_df = x %>%
 
 ```
 
-After some data cleaning, we're done![^2] Let's do some plots to make sure things look alright. 
+After some data cleaning, we're done!  You can find the code for loading and cleaning the data at the end of the post. Keep in mind that the table selection tool might not always work as you expect (e.g. selects an extra row), and the code is sensitive to that. The main things we need to do are 
 
-[^2]: This cleaning process lead me to discover `readr::parse_number`. Super helpful! You can find the code for cleaning the data in the [R Markdown for this post](https://github.com/weiyangtham/weiyangtham.github.io/blob/master/_R/2017-02-05-extract_nci_pdf.Rmd). 
+1. Rename the columns and standardize the funding mechanism names (e.g. Admin supp v.s. administrative supplement)
+2. Parse the numbers e.g. so that R recognizes `$1,000` as `1000`; `readr::parse_number` makes this a cinch
+3. Reshape the data so that it's tidy
+
+Let's do some plots to make sure things look alright. 
 
 ```{r, echo = FALSE}
 nci_df %>% filter(mechanism == "total") %>% 
@@ -161,4 +165,61 @@ nci_df %>%
   
 
 ```
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(magrittr)
+library(stringr)
+library(tabulizer)
+
+# Extract tables
+datadir = str_c(here(), "/data")
+
+# Download PDFs
+download.file("https://officeofbudget.od.nih.gov/pdfs/spending_history/Mechanism%20Detail%20by%20IC,%20FY%201983%20-%20FY%201999.pdf", destfile = str_c(datadir, "/ic_funds_83_99.pdf"))
+download.file("https://officeofbudget.od.nih.gov/pdfs/FY17/Mechanism%20Detail%20by%20IC%20FY%202000-FY%202015%20V.pdf", destfile = str_c(datadir, "/ic_funds_00_15.pdf"))
+
+# Enter interactive mode to select desired tables, which are returned as a list
+nci_83_99 = extract_areas(str_c(datadir, "/ic_funds_83_99.pdf"), pages = 1:2, 
+                          method = 'data.frame')
+nci_00_15 = extract_areas(str_c(datadir, "/ic_funds_00_15.pdf"), pages = 1:2, 
+                          method = 'data.frame')
+
+nci_83_15 = c(nci_83_99, nci_00_15)
+
+# Clean extracted data
+# rename variables and standardize the "mechanism" column
+mechanisms = c("noncompeting", "admin supplements", "competing", "total", "sbir-sttr", "total_with_sbir_sttr")
+
+cols_83_92 = str_c(c('nawards', 'totalfunding'), sort(rep(1983:1992, 2)), sep = '_')
+cols_93_99 = str_c(c('nawards', 'totalfunding'), sort(rep(1993:1999, 2)), sep = '_')
+cols_00_07 = str_c(c('nawards', 'totalfunding'), sort(rep(2000:2007, 2)), sep = '_')
+cols_08_15 = str_c(c('nawards', 'totalfunding'), sort(rep(2008:2015, 2)), sep = '_')
+
+namelist = list(cols_83_92, cols_93_99, cols_00_07, cols_08_15)
+
+nci_83_15_renamed = map(1:4, function(i){
+  nci_83_15[[i]] = setNames(nci_83_15[[i]], c("mechanism", namelist[[i]]))
+  nci_83_15[[i]][, 1] = mechanisms
+  nci_83_15[[i]]
+  })
+
+# Combine the four tables and reshape
+x = nci_83_15_renamed[[1]]
+for (i in 2:4){
+  x = inner_join(x, nci_83_15_renamed[[i]])
+}
+
+x = tbl_df(x)
+
+nci_df = x %>% 
+  gather(stat_year, num, -mechanism) %>% 
+  mutate(num = parse_number(num)) %>% 
+  separate(stat_year, c('stat', 'fiscalyear'), sep = '_', convert = TRUE) %>% 
+  spread(stat, num) %>% 
+  mutate(totalfunding = totalfunding * 1000) # numbers are in thousands of dollars
+
+```
+
+
 
