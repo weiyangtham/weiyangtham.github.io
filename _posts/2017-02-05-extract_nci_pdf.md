@@ -9,13 +9,15 @@ output: html_document
 
 
 
-One of the problems with the [NIH Funding Facts](https://report.nih.gov/fundingfacts/fundingfacts.aspx), which I've used [before](https://weiyangtham.github.io/nih_booms_busts/), is that it has missing data in some important places. First, it only goes back to 1998 and you might want to look at trends even before that. Second, it has missing data in some unpredictable places. For instance, you can see below that National Cancer Institute (NCI) research grant funding is missing from 1998 to 2005, which is a pretty glaring omission given that it's one of the biggest NIH institutes by funding. 
+One of the problems with the [NIH Funding Facts](https://report.nih.gov/fundingfacts/fundingfacts.aspx), which I've used [in an earlier post](https://weiyangtham.github.io/nih_booms_busts/), is that it has missing data in some important places. First, it only goes back to 1998 and you might want to look at trends even before that. Second, it has missing data in some unpredictable places. For instance, you can see below that National Cancer Institute (NCI) R01 funding is missing from 1998 to 2005. The NCI is one of the biggest NIH institutes by funding, so that's pretty valuable information we might want to know. 
 
 <img src="/figs/2017-02-05-extract_nci_pdf/unnamed-chunk-2-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
-One place you might try to get this data is the [NIH Office of Budget](https://officeofbudget.od.nih.gov/spending_hist.html). It doesn't break down spending by activity codes (so you can't, say, look only at spending on R01 grants), but it goes back all the way to 1983 so you can get a longer time series of NIH spending. The problem? The data is in a PDF (oh god why?!), so we have to find a way to extract it. For the sake of reproducibility and accuracy, I want to avoid copying and posting numbers directly from the document as much as possible. 
+One place you might try to get this data is the [NIH Office of Budget](https://officeofbudget.od.nih.gov/spending_hist.html). It doesn't break down spending by activity codes (so you can't, say, look only at spending on R01 grants), but it goes back all the way to 1983 so you can get a longer time series of NIH spending. 
 
-The `tabulizer` package turns out to work pretty well for this since the data is in a table.[^1] We still have to do some "manual" work because of the table's structure. Using the `tabulizer::extract_areas` function, you can interactively specify the area of the PDF where you have a table to be extracted. 
+The problem? The data is in a PDF (oh god why?!), so we have to find a way to extract it. For the sake of reproducibility and accuracy, I want to avoid copying and posting numbers directly from the document as much as possible. 
+
+The `tabulizer` package works pretty well for this since the data is in a table.[^1] We still have to do some "manual" work because of the table's structure. Using the `tabulizer::extract_areas` function, you can interactively specify the area of the PDF where you have a table to be extracted. 
 
 ![][ncipdf]
 
@@ -75,7 +77,7 @@ I'm extracting the data from two files, and unfortunately there's a slight forma
 
 After some data cleaning, we're done![^2] Let's do some plots to make sure things look alright. 
 
-[^2]: This cleaning process lead me to discover `readr::parse_number`. Super helpful!
+[^2]: This cleaning process lead me to discover `readr::parse_number`. Super helpful! You can find the code for cleaning the data in the [R Markdown for this post](https://github.com/weiyangtham/weiyangtham.github.io/blob/master/_R/2017-02-05-extract_nci_pdf.Rmd). 
 
 <img src="/figs/2017-02-05-extract_nci_pdf/unnamed-chunk-6-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
