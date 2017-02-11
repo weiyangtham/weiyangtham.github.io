@@ -27,9 +27,9 @@ Two things here:
 
 1. $$E_i$$ is an time-invariant individual level variable so it is accounted for by the individual fixed effect. 
 
-2. $$K$$, $$t$$, and $$E$$ are linearly related, and the authors show that in the model, $$\gamma_k$$ are only identified up to a linear trend. That is, for any set of estimate of $$\gamma_k$$, you can add a linear trend in $$k$$ and adjust the individual or year fixed effects to get the same predicted value.[^2]
+2. $$K$$, $$t$$, and $$E$$ are linearly related, and the authors show that in the model, $$\gamma_k$$ are only identified up to a linear trend. That is, for any set of estimate of $$\gamma_k$$, you can add a linear trend in $$k$$ and adjust the individual or year fixed effects to get the same predicted value.[^3]
 
-[^2]: Some of you might have already recognized that this is the same problem as trying to estimate, say, individual-age-experience effects. 
+[^3]: Some of you might have already recognized that this is the same problem as trying to estimate, say, individual-age-experience effects. 
 
 More practically, this means that you cannot identify *linear* trends in $$\gamma_k$$. If you actually try to estimate the model in R or Stata, the program will drop two of the $$k$$ categories rather than just one. The interpretation of the coefficients that are returned are deviations from the line between the two categories. 
 
