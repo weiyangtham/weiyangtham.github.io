@@ -96,6 +96,7 @@ df = df %>%
   left_join(idfe, by = 'id') %>% 
   mutate(y = yearfe + idfe + effect + rnorm(1200, sd = 0.1))
 
+# Explicit dummy for each period so can choose which to drop
 for (i in -5:6){
   if (i >= 0){
     period_i = str_c('period_', i)
