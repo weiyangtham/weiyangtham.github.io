@@ -51,13 +51,14 @@ One place you might try to get this data is the [NIH Office of Budget](https://o
 
 The problem? The data is in a PDF (oh god why?!), so we have to find a way to extract it. For the sake of reproducibility and accuracy, I want to avoid copying and posting numbers directly from the document as much as possible. 
 
-The `tabulizer` package works pretty well for this since the data is in a table.[^1] We still have to do some "manual" work because of the table's structure. Using the `tabulizer::extract_areas` function, you can interactively specify the area of the PDF where you have a table to be extracted. 
+The `tabulizer` package works pretty well for this since the data is in a table.[^1] We still have to do some "manual" work because of the table's structure. Using the `tabulizer::extract_areas` function, you can interactively specify the area of the PDF where you have a table to be extracted.[^2]
 
 ![][ncipdf]
 
 [ncipdf]: https://weiyangtham.github.io/images/ncipdf.png
 
 [^1]: Another option for PDF extraction in R is `pdftools`.
+[^2]: In theory, you might be able to partially automate this over multiple pages using tabulizer's `locate_areas()` function, but I haven't got it to work yet. 
 
 ```{r, eval = FALSE, message=FALSE}
 # Code to extract tables
@@ -79,7 +80,7 @@ nci_83_15 = c(nci_83_99, nci_00_15)
 write_rds(nci_83_15, "data/nci_83_15.rds")
 ```
 
-I'm extracting the data from two files, and unfortunately there's a slight formatting difference in each PDF file, so the extracted tables will come out slightly differently. You can see below what you're supposed to get from each PDF file. 
+You can see below what you're supposed to get from each PDF file. 
 
 ```{r, echo = FALSE}
 
