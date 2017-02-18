@@ -74,7 +74,6 @@ analytics:
   google:
     tracking_id          : "UA-78369653-2"
 
-
 # Site Author
 author:
   name             : "Wei Yang Tham"
