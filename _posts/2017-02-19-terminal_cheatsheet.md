@@ -23,7 +23,7 @@ ssh -l username name_of_remote_server
 # From me to remote server
 scp my/directory/datafile.txt username@remote_server:/remote/directory
 
-# From remote server to em
+# From remote server to me
 scp username@remote_server:/remote/directory/datafilet.txt my/directory/
 {% endhighlight %}
 
