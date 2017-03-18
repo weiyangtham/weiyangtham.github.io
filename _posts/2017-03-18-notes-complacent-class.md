@@ -1,0 +1,36 @@
+---
+title: "Notes on The Complacent Class"
+author: "Tham, Wei Yang"
+date: "2017-03-18"
+output: html_document
+---
+
+
+
+This is a collection of notes I made while reading Tyler Cowen's [The Complacent Class](https://www.amazon.com/Complacent-Class-Self-Defeating-Quest-American/dp/1250108691). It's not a summary, response, or endorsement of specific points in the book, although I do recommend the book as a whole.
+
+- Chapter 6, on the bureaucratization of rioting: "There now exists a mini-industry of "protest planners", comparable to wedding or convention planners, and they charges fess to boot."
+
+- In Chapter 7, TC suggests measures of within-country mobility understate the amount of income mobility in a country. We leave out the upward mobility of immigrants. The US "specializes in upward mobility for immigrants". The potential downside of this is that this dynamism is experienced by people who might be less culturally influential. 
+
+- "If anything, Americans have used the dynamism of IT to help ourselves stay put, not to move around."
+
+- A prominent theme in the book is the role of matching. We now have better matching of consuemrs to goods, romantic partners, and employees to firms, but this can also lead to more segregation. 
+
+This argument brought to mind [this paper on **partially deliberate** matching](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1410816). It basically makes the point that we might match with another person based an a certain set of observable characteristics, but that still leaves us open to being influenced on other dimensions we might not have considered or observed beforehand (e.g. if you date someone for their looks and they happen to like Thai food, there might be an incidental effect causing you to develop a love of Thai food). Does society lose something from matches becoming more deliberate than incidental?
+
+There's some evidence for matching leading to [segregation at a micro-level](https://core.ac.uk/download/pdf/6528337.pdf), even without the aid of technology to do so. Some researchers tried to sort incoming classes into the US Air Force Academy to optimize peer effects on academic performance e.g. sorting "low ability" students into classes with "high ability" students, in the hope that better students could help bring up the grades of weaker students. Unfortunately, 
+
+>  We show that within our “optimal” peer groups, students self-selected into bifurcated sub-groups with social dynamics entirely different from those
+in the observational data.
+
+Students self-segregated into high/low academic ability, so that any intended peer effects could not be realized.
+
+- "...income inequality often gives rise to political disengagement rather than unrest."
+
+
+
+
+
+
+
