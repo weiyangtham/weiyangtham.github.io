@@ -1,0 +1,19 @@
+---
+title: "An example script for knitr’s spin"
+author: "Tham, Wei Yang"
+date: "2017-03-22"
+output: html_document
+excerpt: "A really, really simple intro to knitr::spin"
+tags:
+  - r
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I wrote up a [quick example](https://github.com/weiyangtham/weiyangtham.github.io/blob/master/files/spin_example.R) on how to use `spin` from the `knitr` package to compile an R script, as opposed to an R Markdown file, into a report. [Dean Attali's](http://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/) [posts](http://deanattali.com/blog/ezknitr-package/) were what got me started on `spin`, so I'm really just drawing on much of his material. Also, his `ezknitr` package is invaluable for dealing with `knitr` working directory quirks. 
+
+I usually use `spin` at the "analysis" stage - after data cleaning but before writing the paper. I don't like using R Markdown at this point yet because there's still a lot of coding and iteration going on, which makes it tricky to navigate between code chunks. But I still want to be able to produce "reports" that I can refer back to or show to advisors/colleagues, and `spin` is precisely for that middle ground. 
+
+Dean has an example script on his first post about `spin` but I wanted to write up a really simple one that gets at the essence of how `spin` works. The accompanying `spin_example.html` shows you what the output should look like. You'll need to install the `tidyverse` and `gapminder` packages but other than that the script should be self-contained. 
