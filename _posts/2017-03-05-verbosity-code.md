@@ -2,6 +2,10 @@
 title: "Verbosity in code"
 author: "Tham, Wei Yang"
 date: "2017-03-05"
+excerpt: "In coding, err on the side of being verbose."
+tags: 
+  - r
+  - code
 output: html_document
 ---
 
