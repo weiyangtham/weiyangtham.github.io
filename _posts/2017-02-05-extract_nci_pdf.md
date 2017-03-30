@@ -23,7 +23,7 @@ The `tabulizer` package works pretty well for this since the data is in a table.
 
 [ncipdf]: https://weiyangtham.github.io/images/ncipdf.png
 
-[^1]: Another option for PDF extraction in R is `pdftools`.
+[^1]: `tabulizer` is based on [tabula](http://tabula.technology/). Another option for PDF extraction in R is `pdftools`.
 [^2]: In theory, you might be able to partially automate this over multiple pages using tabulizer's `locate_areas()` function, but I haven't got it to work yet. 
 
 
