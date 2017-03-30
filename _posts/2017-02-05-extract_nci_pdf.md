@@ -2,6 +2,7 @@
 title: "Extract NCI funding numbers with tabulizer"
 author: "Tham, Wei Yang"
 date: "2017-02-05"
+excerpt: "Extract tables from a PDF easily"
 output: html_document
 ---
 
