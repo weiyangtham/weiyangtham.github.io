@@ -10,7 +10,7 @@ locale                   : "en"
 title                    : "Wei Yang Tham"
 title_separator          : "-"
 name                     : "Wei Yang Tham"
-description              : "My professional website and blog."
+description              : "Econ PhD Candidate at Ohio State"
 url                      : "https://weiyangtham.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "weiyangtham/weiyangtham.github.io"
@@ -78,7 +78,7 @@ analytics:
 author:
   name             : "Wei Yang Tham"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "PhD student in Economics at The Ohio State University"
+  bio              : "PhD candidate in Economics at The Ohio State University"
   location         : "Columbus, Ohio"
   email            : "weiyang.tham@gmail.com"
   uri              :
