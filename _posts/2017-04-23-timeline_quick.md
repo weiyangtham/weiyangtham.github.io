@@ -12,7 +12,7 @@ tags:
 
 Recently I wanted to create a timeline for a presentation the next day and came up with this code chunk. I'm certainly not recommending it as the prettiest or quickest way to make a timeline, but I couldn't get Dean Attali's [`timevis`](https://daattali.com/shiny/timevis-demo/) to work in an ioslides presentation. I also didn't know about [`timeline`](http://jason.bryer.org/timeline/), which I'll try in the future. 
 
-The idea is pretty simple - it's basically a standard use of `geom_text`, and then you remove unnecessary axes, background elements and so on.[^1]  The thing that really makes this work is the `str_wrap` function from the `stringr` package. If you have a table of years and event descriptions, you can pass the event descriptions through `str_wrap`, so the "plotted" text will be wrapped nicely. 
+The idea is pretty simple - it's basically a standard use of `geom_label`, and then you remove unnecessary axes, background elements and so on.[^1]  The thing that really makes this work is the `str_wrap` function from the `stringr` package. If you have a table of years and event descriptions, you can pass the event descriptions through `str_wrap`, so the "plotted" text will be wrapped nicely. 
 
 [^1]: For the sake proper attribution, I got some of the code for removing graph elements from Stack Overflow but can't find that question anymore. 
 
