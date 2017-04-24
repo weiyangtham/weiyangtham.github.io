@@ -3,6 +3,8 @@ title: "Notes on The Complacent Class"
 author: "Tham, Wei Yang"
 date: "2017-03-18"
 output: html_document
+tags:
+  - notes
 ---
 
 ```{r setup, include=FALSE}
