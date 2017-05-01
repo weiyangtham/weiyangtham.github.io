@@ -1,0 +1,42 @@
+---
+title: "Downloading zip files in R"
+author: "Tham, Wei Yang"
+date: "2017-05-01"
+output: html_document
+tags:
+  - r 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In theory this should be a straightforward task with the `download.file` function, but as I recently found, it's a little trickier than that (but really not that much trickier).[^1] The main things you have to do are 
+
+[^1]: I relied on this [Stack Overflow post](http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data) to figure this out, and it has a few variants on the solution that I'm using here. 
+
+1. Specify `mode = "wb"` in `download.file`
+2. Use `unz` to unzip
+
+Example code below. I used a real url in the example that downloads data on NIH grants from [this page](https://exporter.nih.gov/ExPORTER_Catalog.aspx). 
+
+```{r, eval = FALSE}
+# download zipped folder
+download.file(url = "https://exporter.nih.gov/CSVs/final/RePORTER_PRJ_C_FY2013.zip", 
+              destfile = "destination/folder/RePORTER_PRJ_C_FY2013.zip", 
+              mode = "wb")
+
+# extract file from zipped folder
+x = readr::read_csv(unz(description = "/destination/folder/RePORTER_PRJ_C_FY2013.zip", 
+                        filename = "RePORTER_PRJ_C_FY2013.csv"))
+
+```
+
+This is what you should get at the end:
+
+```{r, echo = FALSE, message = FALSE}
+readr::read_csv(unz("/Users/weiyangtham/Downloads/g2013.zip", "RePORTER_PRJ_C_FY2013.csv"),
+             n_max = 100)
+```
+
+
