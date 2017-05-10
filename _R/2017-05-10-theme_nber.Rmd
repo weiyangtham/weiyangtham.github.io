@@ -1,49 +1,42 @@
 ---
-title: "theme_nber()"
+title: "theme_nber(): first pass"
 author: "Tham, Wei Yang"
 date: "2017-05-10"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', fig.width = 9)
+library(tidyverse)
 ```
 
+I remember someone tweeted recently that a nice way to get into making R packages is to make your first package a customized `ggplot` theme. Last night I made a first pass at creating a theme based on the [NBER's](http://www.nber.org/digest/) graphs in its research summaries. 
 
+Here's a typical NBER graph from the May 2017 NBER digest. The rest of this post is basically a reverse engineering exercise in trying to replicate the design of that graph. ![][nber_robot]
+
+[nber_robot]: https://weiyangtham.github.io/images/robots.jpg
+
+First, I wanted to try to understand what even goes into making a theme in the first place. You can do this by typing `theme_grey`, the default `ggplot` theme, in the console.
 
 ```{r}
-library(tidyverse)
-library(gapminder)
-
-# example
-function (base_size = 11, base_family = "") 
-# {
-#   theme_grey(base_size = base_size, base_family = base_family) %+replace% 
-#     theme(panel.background = element_rect(fill = "white", colour = NA), 
-#           panel.border = element_rect(fill = NA, colour = "grey20"), 
-#           panel.grid.major = element_line(colour = "grey92"), 
-#           panel.grid.minor = element_line(colour = "grey92", 
-#                                           size = 0.25), strip.background = element_rect(fill = "grey85", 
-#                                                                                         colour = "grey20"), legend.key = element_rect(fill = "white", 
-#                                                                                                                                       colour = NA), complete = TRUE)
-# }
-
-p = gapminder %>% filter(country %in% c('Afghanistan', 'Albania')) %>% 
-  ggplot(aes(year, lifeExp, color = country)) + 
-  geom_point() + geom_line()
-
-p
-
-p + theme_bw()
+theme_grey
 ```
 
+The printout is pretty long, but basically what we see is that `theme_grey` is a function where you can specify the size and font, but otherwise it comes with a long list of pre-specified settings e.g. for color and spacing. Now, let's look at `theme_bw`, `ggplot`'s black and white theme. 
+
+```{r}
+theme_bw
+```
+
+Notice that `theme_bw` looks a lot like `theme_grey` but *way* shorter. Instead of re-specifying all the settings, it just takes `theme_grey` and overrides some of the original settings with `%+replace%`. I'm going to use a similar strategy to build up `theme_nber`.
+
+To get the colors right, I used [this website](http://html-color-codes.info/colors-from-image/) to get the hexadecimal code for the background of the NBER graph (I used #F7F8FC, which I think might be just a touch off). The next code chunk is the theme itself, if you want to play around with it. 
 
 ```{r}
 theme_nber = function(base_size = 11, base_family = ""){
   half_line <- base_size/2
   theme_grey(base_size = base_size, base_family = base_family) %+replace%
         theme(
-          # line = element_line(colour = "#0079C2", size = 0.5, linetype = 1, lineend = "butt"),
           rect = element_rect(fill = "#F7F8FC", colour = "#F7F8FC", size = 0.5, linetype = 1),
           text = 
             element_text(family = base_family, face = "plain", colour = "#4C4D4F", 
@@ -65,9 +58,30 @@ theme_nber = function(base_size = 11, base_family = ""){
                                        margin = margin(b = half_line * 0.9))) 
 }
 
-p + theme_nber() + 
-  labs(title = "Employment and Exposure to Robots", 
-       subtitle = "Change in Private Employment", 
-       caption = "Source: Gapminder")  + scale_color_tableau()
+
 ```
 
+Here's what it looks like compared to `theme_grey`, and how to use it.
+
+```{r}
+library(gapminder)
+
+p = gapminder %>% filter(country %in% c('Afghanistan', 'Albania')) %>% 
+  ggplot(aes(year, lifeExp, color = country)) + 
+  geom_point() + geom_line()
+
+p + labs(title = "Rising Life Expectancy in Afghanistan and Albania", 
+       subtitle = "theme_grey", 
+       caption = "Source: Gapminder") + 
+  theme_grey(base_size = 18)
+
+```
+
+```{r}
+p + theme_nber(base_size = 18) + 
+  labs(title = "Rising Life Expectancy in Afghanistan and Albania", 
+       subtitle = "theme_nber", 
+       caption = "Source: Gapminder")
+```
+
+I haven't replicated everything exactly. Compared to the NBER theme, I think the background is just a touch off. I don't have an x-axis, and I have a y-axis label. The colors of the actual plots are also different. Instead of blue and red for Afghanistan and Albania, for instance, the NBER color palette would probably use variations of blue. That's something I might look into in the future, as well as tweaking other defaults, although I feel like using only variations on blue/grey is a little limiting. But otherwise, I think it's not too shabby for a first pass. Feel free to test it out for your own purposes and let me know if you have suggestions about the coding or design.  
