@@ -2,7 +2,10 @@
 title: "theme_nber(): first pass"
 author: "Tham, Wei Yang"
 date: "2017-05-10"
+excerpt: "An early attempt at building a custom theme, inspired by the NBER"
 output: html_document
+tags:
+  - r
 ---
 
 ```{r setup, include=FALSE, warning = FALSE, message = FALSE}
