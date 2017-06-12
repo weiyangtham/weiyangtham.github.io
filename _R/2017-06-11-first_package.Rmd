@@ -9,12 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', fig.width = 9)
 ```
 
-Well this is pretty darn exciting. I made my first package and first custom theme! 
+Well this is pretty darn exciting. I made my first package and first custom theme! Check it out [here](https://github.com/weiyangtham/econothemes)!
 
 You can install it as follows: 
 
-```{r}
+```{r, eval = FALSE}
 devtools::install_github("weiyangtham/econothemes")
 ```
 
-I'll do a more in-depth post about the process, complete with acknowledgements for all the people whose Github accounts I raided for code, but this is it for now!
+I'll do a more in-depth post about the process, complete with acknowledgements for all the people whose Github accounts I raided for code, but for now I just really wanted to share this. 
