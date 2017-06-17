@@ -1,0 +1,99 @@
+---
+title: "Making a ggplot theme"
+author: "Tham, Wei Yang"
+date: "2017-06-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', fig.width = 9)
+```
+
+Recently I created a [simple custom theme](https://github.com/weiyangtham/econothemes), inspired by the NBER's plots for its magazines. Here are some notes on how I did this. I hope it'll be helpful for someone who wants to have greater control over their plots. 
+
+### Big picture
+There are two things that go into the theme.
+
+1. The theme itself. Normally this is a function with a name like `theme_X` e.g. `theme_minimal` in the ggplot2 package, or `theme_fivethiryeight` from the ggthemes package. 
+
+2. A custom color palette (this is optional). `theme_fivethirtyeight` has a custom color palette which you can use with, for example, `scale_color_fivethirtyeight`. 
+
+### theme_nber()
+This is going to sound obvious, but building a custom theme (at least for my case) is essentially a matter of taking an existing theme, knocking out the elements you don't want and putting in the new features you do want. So how does this actually work?
+
+In my case, I started out with the ggplot2 default `theme_grey`. Another option is ggtheme's `theme_foundation()`, which I didn't learn about till much later. According its documentation, 
+
+> It is easier to create new themes by extending this one rather than theme_gray or theme_bw, because those themes those themes define elements deep in the hierarchy.
+
+Which you use probably depends on how much flexibility you want to have in creating your theme. If you're only changing one or two features then starting from scratch might not be worth it. 
+
+#### Removing gridlines
+
+Let's look at a side-by-side of `theme_grey` and `theme_nber`. 
+
+```{r}
+library(ggplot2)
+library(econothemes)
+
+p_grey = ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
+       title="Seminal ggplot2 scatterplot example",
+       subtitle="A plot that is only useful for demonstration purposes",
+       caption="Same example as in hrbrthemes'") + 
+  theme_grey()
+
+p_nber = ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
+       title="Seminal ggplot2 scatterplot example",
+       subtitle="A plot that is only useful for demonstration purposes",
+       caption="Same example as in hrbrthemes'") + 
+  theme_nber()
+
+gridExtra::grid.arrange(p_grey, p_nber, nrow = 1)
+
+```
+
+
+One of the major differences between `theme_grey` and `theme_nber` is the sparing use of gridlines in the latter. You can achieve that effect as follows:
+
+```{r}
+theme_nogrid = function(base_size = 11, base_family = ""){
+  theme_grey(base_size = base_size, base_family = base_family) %+replace%
+    theme(
+      panel.grid.minor.y = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank())
+}
+
+p_grey + theme_nogrid()
+
+```
+
+Ta-da! 
+
+#### Uniform background
+Another obvious difference is that the background of the graph and the entire image are the same for `theme_nber`. 
+
+```{r}
+theme_allgrey = function(base_size = 11, base_family = ""){
+  theme_grey(base_size = base_size, base_family = base_family) %+replace%
+    theme(
+      plot.background = element_rect(fill = "grey92"), 
+      panel.border = element_blank(),
+      panel.background = element_rect(fill = "grey92", colour = NA)
+      )
+}
+
+p_grey + theme_allgrey()
+```
+
+Play around with the function to see how each argument matters. For `theme_nber`, I just replaced `grey92` with the hexadecimal code for the NBER's plots, using [this website](http://html-color-codes.info/colors-from-image/). 
+
+There are a few other minor differences between the two themes, but I think these are the ones that really matter. 
+
+### scale_color_nber()
+
+
+
