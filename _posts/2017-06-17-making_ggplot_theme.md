@@ -146,7 +146,7 @@ If you want to learn more about palettes, check out [colorbrewer2.org](colorbrew
 
 ### Conclusion
 
-So that's it! You could get even deeper into the weeds by, say, playing with the fonts. But if you just want to tweak your plots, the most important thing is to map the arguments in `theme` to the feature you're interested in, and that just takes a little bit of trial and error or judicious googling. After that, it will be easy-peasy. 
+So that's it! You could get even deeper into the weeds by, say, playing with the fonts. But if you just want to tweak your plots, the most important thing is to map the arguments in `theme` to the feature you're interested in, and that just takes a little bit of trial and error or judicious googling. After that, it will be (mostly) easy-peasy. 
 
 
 
