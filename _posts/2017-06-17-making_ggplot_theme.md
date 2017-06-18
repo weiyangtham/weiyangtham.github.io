@@ -34,7 +34,7 @@ Let's look at a side-by-side of `theme_grey` and `theme_nber`.
 
 
 {% highlight r %}
-library(ggplot2)
+library(tidyverse)
 library(econothemes)
 
 p_grey = ggplot(mtcars, aes(mpg, wt)) +
@@ -53,6 +53,7 @@ p_nber = ggplot(mtcars, aes(mpg, wt)) +
        caption="Same example as in hrbrthemes") + 
   theme_nber()
 
+# install.packages("gridExtra")
 gridExtra::grid.arrange(p_grey, p_nber, nrow = 1)
 {% endhighlight %}
 
