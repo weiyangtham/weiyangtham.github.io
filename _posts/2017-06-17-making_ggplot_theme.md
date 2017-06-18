@@ -8,10 +8,7 @@ tags:
   - r
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', fig.width = 9)
-theme_set(theme_grey(base_size = 18))
-```
+
 
 Recently I created a [simple custom theme](https://github.com/weiyangtham/econothemes), inspired by the NBER's plots for its magazines. Here are some notes on how I did this. I hope it'll be helpful for someone who wants to have greater control over their plots. 
 
@@ -35,7 +32,8 @@ Which you use probably depends on how much flexibility you want to have in creat
 
 Let's look at a side-by-side of `theme_grey` and `theme_nber`. 
 
-```{r}
+
+{% highlight r %}
 library(ggplot2)
 library(econothemes)
 
@@ -56,13 +54,15 @@ p_nber = ggplot(mtcars, aes(mpg, wt)) +
   theme_nber()
 
 gridExtra::grid.arrange(p_grey, p_nber, nrow = 1)
+{% endhighlight %}
 
-```
+<img src="/figs/2017-06-17-making_ggplot_theme/unnamed-chunk-1-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 
 One of the major differences between `theme_grey` and `theme_nber` is the sparing use of gridlines in the latter. You can achieve that effect as follows:
 
-```{r}
+
+{% highlight r %}
 theme_nogrid = function(base_size = 18, base_family = ""){
   theme_grey(base_size = base_size, base_family = base_family) %+replace%
     theme(
@@ -72,15 +72,17 @@ theme_nogrid = function(base_size = 18, base_family = ""){
 }
 
 p_grey + theme_nogrid()
+{% endhighlight %}
 
-```
+<img src="/figs/2017-06-17-making_ggplot_theme/unnamed-chunk-2-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 Ta-da! Notice that there are two types of gridlines - major and minor. I'd never have known that if I hadn't embarked on this project.
 
 ### Uniform background
 Another obvious difference is that the background of the graph and the entire image are the same for `theme_nber`. 
 
-```{r}
+
+{% highlight r %}
 theme_allgrey = function(base_size = 18, base_family = ""){
   theme_grey(base_size = base_size, base_family = base_family) %+replace%
     theme(
@@ -89,7 +91,9 @@ theme_allgrey = function(base_size = 18, base_family = ""){
 }
 
 p_grey + theme_allgrey()
-```
+{% endhighlight %}
+
+<img src="/figs/2017-06-17-making_ggplot_theme/unnamed-chunk-3-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 Change the `fill` and `colour` arguments to see how they affect the image. For `theme_nber`, I just replaced `grey92` with the hexadecimal code for the NBER's plots, using [this website](http://html-color-codes.info/colors-from-image/) to figure out the hex code. My actual code is clunkier than the one above and I'm not sure why, so I will have to revisit that at some point. 
 
@@ -102,26 +106,38 @@ An interesting thing about the NBER's plots is that they use different shades of
 
 This is probably OK if you only have 2 or 3 groups to separate out, but otherwise they become difficult to distinguish. I ended up creating a "palette" of two shades of blue, which means it won't work if your data has more than two groups. For example, this is fine:
 
-```{r}
+
+{% highlight r %}
 gapminder %>% 
   filter(country %in% c("United States", "United Kingdom")) %>% 
   ggplot(aes(year, lifeExp, color = country)) + 
   geom_line(size = 1) + 
   theme_nber(base_size = 18) + 
   scale_color_nber()
+{% endhighlight %}
 
-```
+<img src="/figs/2017-06-17-making_ggplot_theme/unnamed-chunk-4-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 But this gets you an error message. 
 
-```{r}
+
+{% highlight r %}
 gapminder %>% 
   filter(country %in% c("United States", "United Kingdom", "Singapore")) %>% 
   ggplot(aes(year, lifeExp, color = country)) + 
   geom_line(size = 1) + 
   theme_nber(base_size = 18) + 
   scale_color_nber()
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning: This manual palette can handle a maximum of 2 values. You have
+## supplied 3.
+{% endhighlight %}
+
+<img src="/figs/2017-06-17-making_ggplot_theme/unnamed-chunk-5-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 Coding up the palette was a challenge and in the end I just ended up copying [Bob Rudis's code](https://github.com/hrbrmstr/hrbrthemes/blob/master/R/color.r) for his hrbrthemes package. But I have to be honest and say that I don't have a great grip on the ins and outs of it. 
 
