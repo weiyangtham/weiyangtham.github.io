@@ -19,7 +19,7 @@ I occasionally get asked for tips about getting started with R, so I thought I'd
 
 2. If I were starting all over again, I'd also pick up Hadley Wickham's [R for Data Science](http://r4ds.had.co.nz/). There's a free version online and a paperback version. Jenny Bryan's [Stat 545 class website](http://stat545.com/) is also a great resource. 
 
-3. **Twitter**. The R community on twitter is really active, it's a great way to keep track of new tools being developed. Accounts I recommend (just to get started cos there are so many more): [Hadley Wickham](https://twitter.com/hadleywickham), [Jenny Bryan](https://twitter.com/JennyBryan), [David Robinson](https://twitter.com/drob), and [Julia Silge](https://twitter.com/juliasilge). 
+3. **Twitter**. The R community on twitter is really active, it's a great way to keep track of new tools being developed. Accounts I recommend (just to get started cos there are so many more): [Hadley Wickham](https://twitter.com/hadleywickham), [Jenny Bryan](https://twitter.com/JennyBryan), [David Robinson](https://twitter.com/drob), [Julia Silge](https://twitter.com/juliasilge), and [Mara Averick](https://twitter.com/dataandme). 
 
 ## R v.s. Stata
 
