@@ -1,0 +1,50 @@
+---
+title: "Took a crack at a ggplot2 geom"
+author: "Tham, Wei Yang"
+date: "November 8, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+```
+
+I'm back! This post is about my attempt to create a ggplot2 `geom_`, which I'm calling `geom_errorline`.
+
+A common graph seen in economics is a series of coefficients estimated over multiple time periods. Often you want to include the confidence interval for each separate coefficient. In ggplot2, you can do this with `geom_errorbar`. 
+
+```{r}
+df = data_frame(b = c(0, 0, 0, 0, 0, 1, 1.5, 1.7, 1.8), 
+           year = -4:4)
+
+ggplot(df, aes(year, b, ymax = b + 0.2, ymin = b - 0.2)) + 
+  geom_line() + 
+  geom_errorbar(linetype = 2) 
+```
+
+Another way you could represent this is to give the upper bounds and lower bounds as their own lines. 
+
+```{r}
+ggplot(df, aes(year, b, ymax = b + 0.2, ymin = b - 0.2)) + 
+  geom_line() + 
+  geom_errorline(linetype = 2) 
+
+# Same thing with geom_line()
+# ggplot(df, aes(year, b)) + 
+#   geom_line() + 
+#   geom_line(aes(y = b + 0.2), linetype = 2) + 
+#   geom_line(aes(y = b - 0.2), linetype = 2) 
+
+```
+
+You could have done this with just `geom_line`, as seen in the code commented out above. `geom_errorline` possibly saves some typing, but more importantly, provides a little bit of clarity to your code. 
+
+## The process
+
+asdf
+
+
+
+
+
