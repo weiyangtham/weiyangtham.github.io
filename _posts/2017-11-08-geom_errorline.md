@@ -21,6 +21,7 @@ devtools::install_github("weiyangtham/econothemes")
 {% highlight r %}
 library(tidyverse)
 library(econothemes)
+
 theme_set(theme_nber(base_size = 18))
 {% endhighlight %}
 
@@ -47,7 +48,8 @@ Another way you could represent this is to give the upper bounds and lower bound
 {% highlight r %}
 p + 
   geom_line(aes(y = b + 0.2), linetype = 2) +
-  geom_line(aes(y = b - 0.2), linetype = 2)
+  geom_line(aes(y = b - 0.2), linetype = 2) + 
+  ggtitle("Lines instead of error bars")
 {% endhighlight %}
 
 <img src="/figs/2017-11-08-geom_errorline/unnamed-chunk-4-1.png" title="center" alt="center" style="display: block; margin: auto;" />
@@ -56,8 +58,7 @@ p +
 
 
 {% highlight r %}
-p + 
-  geom_errorline(linetype = 2) 
+p + geom_errorline(linetype = 2) + ggtitle("geom_errorline")
 {% endhighlight %}
 
 

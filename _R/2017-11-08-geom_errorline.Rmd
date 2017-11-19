@@ -21,6 +21,7 @@ devtools::install_github("weiyangtham/econothemes")
 ```{r}
 library(tidyverse)
 library(econothemes)
+
 theme_set(theme_nber(base_size = 18))
 ```
 
@@ -44,15 +45,15 @@ Another way you could represent this is to give the upper bounds and lower bound
 
 p + 
   geom_line(aes(y = b + 0.2), linetype = 2) +
-  geom_line(aes(y = b - 0.2), linetype = 2)
+  geom_line(aes(y = b - 0.2), linetype = 2) + 
+  ggtitle("Lines instead of error bars")
 
 ```
 
 `geom_errorline` does the same thing as the code above. It saves you a bit of typing and I think also makes the code more readable. 
 
 ```{r}
-p + 
-  geom_errorline(linetype = 2) 
+p + geom_errorline(linetype = 2) + ggtitle("geom_errorline")
 ```
 
 If that's all you came for and you just want to use the geom, you can stop reading here. The rest of the post is notes on the (semi-painful) process of creating a new geom. 
