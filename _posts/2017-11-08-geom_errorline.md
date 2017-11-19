@@ -10,7 +10,7 @@ tags:
 
 
 
-I'm back! This post is about my attempt to create a ggplot2 `geom_`, which I'm calling `geom_errorline`. You can use `geom_errorline` as part of my [`econothemes` package](https://github.com/weiyangtham/econothemes). I'm still a noob when it comes to the package-making game, so definitely let me know if there are issues or you have questions. You can install the package from Github with the code below. 
+I'm back! This post is about my attempt to create a ggplot2 `geom`, which I'm calling `geom_errorline`. You can use `geom_errorline` as part of my [`econothemes` package](https://github.com/weiyangtham/econothemes). I'm still a noob when it comes to the package-making game, so definitely let me know if there are issues or you have questions. You can install the package from Github with the code below. 
 
 
 {% highlight r %}
@@ -60,7 +60,11 @@ p +
   geom_errorline(linetype = 2) 
 {% endhighlight %}
 
-<img src="/figs/2017-11-08-geom_errorline/unnamed-chunk-5-1.png" title="center" alt="center" style="display: block; margin: auto;" />
+
+
+{% highlight text %}
+## Error in geom_errorline(linetype = 2): could not find function "geom_errorline"
+{% endhighlight %}
 
 If that's all you came for and you just want to use the geom, you can stop reading here. The rest of the post is notes on the (semi-painful) process of creating a new geom. 
 
