@@ -21,7 +21,6 @@ devtools::install_github("weiyangtham/econothemes")
 ```{r}
 library(tidyverse)
 library(econothemes)
-
 theme_set(theme_nber(base_size = 18))
 ```
 

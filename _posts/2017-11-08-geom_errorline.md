@@ -21,7 +21,6 @@ devtools::install_github("weiyangtham/econothemes")
 {% highlight r %}
 library(tidyverse)
 library(econothemes)
-
 theme_set(theme_nber(base_size = 18))
 {% endhighlight %}
 
@@ -61,11 +60,7 @@ p +
 p + geom_errorline(linetype = 2) + ggtitle("geom_errorline")
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in geom_errorline(linetype = 2): could not find function "geom_errorline"
-{% endhighlight %}
+<img src="/figs/2017-11-08-geom_errorline/unnamed-chunk-5-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 If that's all you came for and you just want to use the geom, you can stop reading here. The rest of the post is notes on the (semi-painful) process of creating a new geom. 
 
