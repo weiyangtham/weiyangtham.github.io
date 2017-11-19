@@ -21,6 +21,7 @@ devtools::install_github("weiyangtham/econothemes")
 {% highlight r %}
 library(tidyverse)
 library(econothemes)
+theme_set(theme_nber(base_size = 18))
 {% endhighlight %}
 
 
@@ -38,7 +39,7 @@ p = ggplot(df, aes(year, b, ymax = b + 0.2, ymin = b - 0.2)) + geom_line()
 p + geom_errorbar(linetype = 2) 
 {% endhighlight %}
 
-![center](/figs/2017-11-08-geom_errorline/unnamed-chunk-3-1.png)
+<img src="/figs/2017-11-08-geom_errorline/unnamed-chunk-3-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 Another way you could represent this is to give the upper bounds and lower bounds as their own lines. You could do this by adding a separate `geom_line` for the upper and lower bounds respectively.  
 
@@ -49,7 +50,7 @@ p +
   geom_line(aes(y = b - 0.2), linetype = 2)
 {% endhighlight %}
 
-![center](/figs/2017-11-08-geom_errorline/unnamed-chunk-4-1.png)
+<img src="/figs/2017-11-08-geom_errorline/unnamed-chunk-4-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 `geom_errorline` does the same thing as the code above. It saves you a bit of typing and I think also makes the code more readable. 
 
@@ -59,7 +60,7 @@ p +
   geom_errorline(linetype = 2) 
 {% endhighlight %}
 
-![center](/figs/2017-11-08-geom_errorline/unnamed-chunk-5-1.png)
+<img src="/figs/2017-11-08-geom_errorline/unnamed-chunk-5-1.png" title="center" alt="center" style="display: block; margin: auto;" />
 
 If that's all you came for and you just want to use the geom, you can stop reading here. The rest of the post is notes on the (semi-painful) process of creating a new geom. 
 

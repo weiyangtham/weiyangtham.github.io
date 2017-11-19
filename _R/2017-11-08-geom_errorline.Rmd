@@ -9,7 +9,7 @@ tags:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 9)
 ```
 
 I'm back! This post is about my attempt to create a ggplot2 `geom_`, which I'm calling `geom_errorline`. You can use `geom_errorline` as part of my [`econothemes` package](https://github.com/weiyangtham/econothemes). I'm still a noob when it comes to the package-making game, so definitely let me know if there are issues or you have questions. You can install the package from Github with the code below. 
@@ -21,6 +21,7 @@ devtools::install_github("weiyangtham/econothemes")
 ```{r}
 library(tidyverse)
 library(econothemes)
+theme_set(theme_nber(base_size = 18))
 ```
 
 
