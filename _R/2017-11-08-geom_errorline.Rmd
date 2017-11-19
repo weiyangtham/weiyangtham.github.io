@@ -1,8 +1,11 @@
 ---
-title: "Took a crack at a ggplot2 geom"
+title: "geom_errorline for intervals"
 author: "Tham, Wei Yang"
 date: "November 8, 2017"
 output: html_document
+excerpt: "Upper and lower bounds as lines rather than intervals at each point"
+tags:
+  - r
 ---
 
 ```{r setup, include=FALSE}

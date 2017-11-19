@@ -1,13 +1,16 @@
 ---
-title: "Took a crack at a ggplot2 geom"
+title: "geom_errorline for intervals"
 author: "Tham, Wei Yang"
 date: "November 8, 2017"
 output: html_document
+excerpt: "Upper and lower bounds as lines rather than intervals at each point"
+tags:
+  - r
 ---
 
 
 
-I'm back! This post is about my attempt to create a ggplot2 `geom_`, which I'm calling `geom_errorline`. You can use `geom_errorline` as part of my `econothemes` package. I'm still a noob when it comes to the package-making game, so definitely let me know if there are issues or you have questions. You can install the package from Github. 
+I'm back! This post is about my attempt to create a ggplot2 `geom_`, which I'm calling `geom_errorline`. You can use `geom_errorline` as part of my [`econothemes` package](https://github.com/weiyangtham/econothemes). I'm still a noob when it comes to the package-making game, so definitely let me know if there are issues or you have questions. You can install the package from Github with the code below. 
 
 
 {% highlight r %}
@@ -62,7 +65,7 @@ If that's all you came for and you just want to use the geom, you can stop readi
 
 ### The process
 
-The first thing I realized was that creating a new geom wasn't going to be as simple as writing a wrapper around `geom_line`, or at least not the way I tried it. I came across this post much later about [combining multiple ggplot2 layers](https://martinsbioblogg.wordpress.com/2017/04/23/using-r-a-function-that-adds-multiple-ggplot2-layers/), but a new geom is still appealing just so it remains consistent with the other ggplot2 code you're writing.
+The first thing I realized was that creating a new geom wasn't going to be as simple as writing a wrapper around `geom_line`, or at least not the way I tried it. I came across this post much later about [combining multiple ggplot2 layers](https://martinsbioblogg.wordpress.com/2017/04/23/using-r-a-function-that-adds-multiple-ggplot2-layers/), but a new geom is still appealing just because it remains consistent with the other ggplot2 code you're writing.
 
 If you're interested in writing an extension to ggplot2, you'll probably want to start with [this vignette](http://ggplot2.tidyverse.org/articles/extending-ggplot2.html). Some of what I'll write below is a dumbed-down version of material from that vignette.
 
