@@ -1,0 +1,42 @@
+---
+title: "Step-by-step of my workflow"
+author: "Tham, Wei Yang"
+date: "2017-12-17"
+output: html_document
+excerpt: "Perfected over years of tears and shame"
+tags:
+  - r
+  - code
+  - reproducibility
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Open a new repository in Github
+1. Create a new RStudio Project by choosing the option to "Checkout a project from a version control repository"
+    + I find doing 1 then 2 easier than the other way around
+1. Create folders/directories:
+    + `rawdata`
+    + `data` - intermediate data outputs
+    + `reports` - usually R Notebooks or R Markdown files recording summary statistics, analyses
+        + Share html reports using [https://htmlpreview.github.io/](https://htmlpreview.github.io/)
+    + `scripts` 
+        + If you're using multiple languages you can have subdirectories for different languages e.g `scripts/R`, `scripts/python`
+        + `functions.R` script to keep functions separate from other programming
+        + `source.R` script that runs all other scripts and (at least in theory!) can generate final output from raw data
+    + `presentations` - slides for presentations; most recently I've been using [revealjs](http://rmarkdown.rstudio.com/revealjs_presentation_format.html)
+    + `manuscripts` - papers, extended abstracts
+    + `plots` - I often save plots/graphs as `.rds` files instead of image files (like JPEG, PNG etc.) so that I can do the editing in the R Markdown manuscript instead
+    + Others: 
+        + `models` - save model output after, say, running a regression
+        + `results` - typically regression coefficients stored as a dataframe
+1. Github Issues (click on the Issues tab in your Github repository): I use this as my to-do list. It's a nice way of keeping your tasks organized by project
+1. Communicating with collaborators: I use Slack but there are other options; good ol' email is fine but it can get hard to dig up old conversations
+
+There are plenty of great resources out there that go into detail on the hows and whys of setting up a reproducible project. A couple of places to get started:
+
+- [Software carpentry tutorial](https://swcarpentry.github.io/r-novice-gapminder/02-project-intro/)
+- [Good enough practices in scientific computing](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+    
