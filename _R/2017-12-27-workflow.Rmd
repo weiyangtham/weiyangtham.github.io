@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
         + `source.R` script that runs all other scripts and (at least in theory!) can generate final output from raw data
     + `presentations` - slides for presentations; most recently I've been using [revealjs](http://rmarkdown.rstudio.com/revealjs_presentation_format.html)
     + `manuscripts` - papers, extended abstracts
-    + `plots` - I often save plots/graphs as `.rds` files instead of image files (like JPEG, PNG etc.) so that I can do the editing in the R Markdown manuscript instead
+    + `plots` - I often save plots/graphs as `.rds` files instead of image files (like JPEG, PNG etc.) so that I can do the editing in R Markdown with `ggplot2`
     + Others: 
         + `models` - save model output after, say, running a regression
         + `results` - typically regression coefficients stored as a dataframe
