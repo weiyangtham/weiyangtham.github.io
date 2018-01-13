@@ -1,0 +1,33 @@
+---
+title: "STATA `reshape` in R"
+author: "Tham, Wei Yang"
+date: "2018-01-13"
+output: html_document
+tags:
+  - r
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I've always wished `tidyr::gather` could work on multiple variables, like STATA's [`reshape`](https://www.stata.com/manuals13/dreshape.pdf). I've thought about writing a function to do it but just never got down to it...until [Paul Goldsmith-Pinkham](https://twitter.com/paulgp) asked about it on Twitter. 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">For <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> users -- how do I reshape wide / long using gather and spread with multiple variables?</p>&mdash; Paul G-P (@paulgp) <a href="https://twitter.com/paulgp/status/952178749075804160?ref_src=twsrc%5Etfw">January 13, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+The only 
+
+```{r}
+gather_multivalue = function(data, vars, key2 = "key2", regex = "\\b([a-z]+).+[^[0-9]](\\d+?)\\b"){
+
+  vars = enquo(vars)
+
+  data %>%
+    gather(key, value, !!vars) %>%
+    extract(key, c("colname", key2), regex) %>%
+    spread(colname, value)
+}
+
+```
+
