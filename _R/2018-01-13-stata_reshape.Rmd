@@ -24,7 +24,7 @@ scores2000 = 96:100,
 scores2010 = 100:96)
 ```
 
-Update: There is an R function called `reshape` from the `stats` package that does the same thing. As far as I can tell, the main differences are since it's not a tidyverse function, it doesn't have access to the `dplyr` select helpers for selecting columns and doesn't use the key-value framework. 
+Update: There is an R function called `reshape` from the `stats` package that does the same thing, just not within the tidyverse framework
 
 If you've used Stata you might be familiar with its [`reshape`](https://www.stata.com/manuals13/dreshape.pdf) command. `reshape` makes a wide dataset long and vice versa. The equivalent in the `tidyverse` would be the `gather` (wide to long) and `spread` (long to wide) functions from the `tidyr` package. The difference is that `gather` and `spread` work on key-*value* pairs, emphasis on the singular "value", while `reshape` is fine with having multiple values associated with a single key. For example, to reshape the following (fake) wide dataset from this:
 
