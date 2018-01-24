@@ -5,6 +5,7 @@ date: "2018-01-13"
 output: html_document
 tags:
   - r
+  - stata
 ---
 
 
