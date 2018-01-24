@@ -12,9 +12,9 @@ tags:
 
 
 
-If you've used Stata you might familiar with its [`reshape`](https://www.stata.com/manuals13/dreshape.pdf) command. `reshape` makes a wide dataset long and vice versa. The equivalent in R would be the `gather` (wide to long) and `spread` (long to wide) functions from the `tidyr` package. 
+If you've used Stata you might be familiar with its [`reshape`](https://www.stata.com/manuals13/dreshape.pdf) command. `reshape` makes a wide dataset long and vice versa. The equivalent in R would be the `gather` (wide to long) and `spread` (long to wide) functions from the `tidyr` package. 
 
-The difference is that `gather` and `spread` work on key-*value* pairs, emphasis on the singular "value", while `reshape` is fine with having multiple values associated with a single key. For example, the following (fake) wide dataset from this:
+The difference is that `gather` and `spread` work on key-*value* pairs, emphasis on the singular "value", while `reshape` is fine with having multiple values associated with a single key. For example, to reshape the following (fake) wide dataset from this:
 
 
 |id | age2000| age2010| scores2000| scores2010|
@@ -126,7 +126,7 @@ gather_multivalue(scores, "year", age2000:scores2010)
 gather_multivalue(scores, "year", -id)
 {% endhighlight %}
 
-`gather_multivalue` also asks you to specify a regular expression (regex) for how to extract the key and values. The default regex assumes that the columns are of the form `(word)(number)`. I like that regex gives you some flexibility if you columns with slightly weird or varying patterns:
+`gather_multivalue` also asks you to specify a regular expression (regex) for how to extract the key and values. The default regex assumes that the columns are of the form `(word)(number)`. I like that regex gives you some flexibility if you get columns with slightly weird or varying patterns:
 
 
 |id | age.2000| age.2010| scores_2000| scores_2010|
